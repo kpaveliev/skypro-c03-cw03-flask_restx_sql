@@ -4,6 +4,7 @@ import hmac
 from typing import List
 
 from flask import current_app
+from flask_restx import abort
 
 from project.dao import UserDAO
 from project.dao.models import User
@@ -34,12 +35,36 @@ class UserService:
         user = self.dao.create(data)
         return user
 
-    # def update(self, user_d: dict) -> None:
-    #     """Update user"""
-    #     # Hash password
-    #     user_d['password'] = self.create_hash(user_d.get('password'))
-    #     # Update in the database
-    #     self.dao.update(user_d)
+    def update_info(self, data: dict) -> None:
+        """Partially update user information"""
+        # Check data is okay
+        if 'password' not in data.keys() and 'email' not in data.keys():
+            self.dao.update(data)
+        else:
+            abort(405, f"You can't change email and password using this method")
+
+    def update_password(self, data: dict) -> None:
+        """Partially update user information"""
+        # Check data is okay
+        uid = data.get('id')
+        current_password = data.get('password_1')
+        new_password = data.get('password_2')
+
+        if None in [uid, current_password, new_password]:
+            abort(405, f"Wrong arguments passed")
+
+        user = self.get_one(uid)
+        if not self.compare_passwords(user.password, current_password):
+            abort(405, f"Wrong password passed")
+
+        data = {
+            'id': uid,
+            'password': self.hash_password(new_password)
+        }
+
+        self.dao.update(data)
+
+
     #
     # def delete(self, uid: int) -> None:
     #     """Delete user"""

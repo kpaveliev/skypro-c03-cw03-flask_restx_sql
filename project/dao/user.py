@@ -8,11 +8,11 @@ from .base import BaseDAO
 
 
 class UserDAO(BaseDAO):
-    #
-    # def get_one(self, uid: int) -> User:
-    #     """Get user by id"""
-    #     user = self.session.query(User).get(uid)
-    #     return user
+
+    def get_one(self, uid: int) -> User:
+        """Get user by id"""
+        user = self.session.query(User).get(uid)
+        return user
 
     def get_all(self) -> List[User]:
         """Get all users"""
@@ -37,13 +37,9 @@ class UserDAO(BaseDAO):
         self.session.delete(user)
         self.session.commit()
 
-    # def update(self, data: dict) -> None:
-    #     """Update user with data"""
-    #     user = self.get_one(data.get("id"))
-    #     user.email = data.get("email")
-    #     user.password = data.get("password")
-    #     user.role = data.get("role")
-    #
-    #     self.session.add(user)
-    #     self.session.commit()
+    def update(self, data: dict) -> None:
+        """Update user with data"""
+        self.session.query(User).filter(User.id == data['id']).update(data)
+        self.session.commit()
+
 
