@@ -17,7 +17,7 @@ class User(BaseMixin, db.Model):
     genre = db.relationship("Genre")
 
     def __repr__(self):
-        return f"<Genre '{self.username.title()}'>"
+        return f"<User '{self.email.title()}'>"
 
 
 class UserSchema(Schema):

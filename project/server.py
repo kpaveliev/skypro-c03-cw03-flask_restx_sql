@@ -4,12 +4,15 @@ from flask_restx import Api
 
 from project.setup_db import db
 from project.views import genres_ns
+from project.views import movie_ns
+from project.views import user_ns
+from project.views import auth_ns
 
 api = Api(
     authorizations={
         "Bearer": {"type": "apiKey", "in": "header", "name": "Authorization"}
     },
-    title="Flask Course Project 3",
+    title="Flask Course Project 4",
     doc="/docs",
 )
 
@@ -27,5 +30,8 @@ def create_app(config_obj):
 
     # Регистрация эндпоинтов
     api.add_namespace(genres_ns)
+    api.add_namespace(movie_ns)
+    api.add_namespace(auth_ns)
+    api.add_namespace(user_ns)
 
     return app
