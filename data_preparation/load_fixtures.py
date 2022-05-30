@@ -1,7 +1,9 @@
 from sqlalchemy.exc import IntegrityError
 
 from project.config import DevelopmentConfig
-from project.dao.models import Genre
+from project.dao.models.director import Director
+from project.dao.models.genre import Genre
+from project.dao.models.movie import Movie
 from project.server import create_app
 from project.setup_db import db
 from project.utils import read_json
@@ -12,7 +14,13 @@ data = read_json("fixtures.json")
 
 with app.app_context():
     for genre in data["genres"]:
-        db.session.add(Genre(id=genre["pk"], name=genre["name"]))
+        db.session.add(Genre(**genre))
+
+    for director in data["directors"]:
+        db.session.add(Director(**director))
+
+    for movie in data["movies"]:
+        db.session.add(Movie(**movie))
 
     try:
         db.session.commit()
