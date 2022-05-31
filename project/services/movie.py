@@ -1,15 +1,27 @@
-from typing import List, Dict, Any
+from typing import List
 
 from project.dao.models import Movie
-from project.dao import MovieDAO
+from project.exceptions import ItemNotFound
+from project.services.base import BaseService
 
 
-class MovieService:
-    def __init__(self, dao: MovieDAO) -> None:
-        self.dao = dao
+class MovieService(BaseService):
 
-    def get_all(self, page: str = None, sort: str = None) -> List[Movie]:
-        return self.dao.get_all(page, sort)
+    def get_all(self, page: str = None, status: str = None) -> List[Movie]:
+        """
+        Get all items from the db
 
-    def get_one(self, uid: int) -> Movie:
-        return self.dao.get_one(uid)
+        :param page: Page number (optional)
+        :param status: 'New' if you want to sort movies by year
+        """
+        # Check parameter
+        check_status = status == 'new'
+        if not check_status:
+            movies = self.dao.get_all(page, sort=False)
+
+        # Get results
+        movies = self.dao.get_all(page, sort=True)
+        if not movies:
+            raise ItemNotFound
+
+        return movies

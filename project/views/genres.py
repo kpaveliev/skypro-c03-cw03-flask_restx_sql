@@ -1,27 +1,41 @@
-from flask_restx import abort, Namespace, Resource
+from flask import request
+from flask_restx import Resource, Namespace, abort
 
 from project.exceptions import ItemNotFound
-from project.services import GenresService
-from project.setup_db import db
+from project.container import genre_service
+from project.dao.models import GenreSchema
 
-genres_ns = Namespace("genres")
+# Declare namespace and define marshmallow schema
+genre_ns = Namespace('genres', description='Views for genres')
+genres_schema = GenreSchema(many=True)
+genre_schema = GenreSchema()
 
 
-@genres_ns.route("/")
-class GenresView(Resource):
-    @genres_ns.response(200, "OK")
+@genre_ns.route('/')
+class GenresViews(Resource):
+    @genre_ns.doc(description='Get genres', params={'page': 'Page number'})
+    @genre_ns.response(200, 'Success')
+    @genre_ns.response(404, 'Not found')
     def get(self):
-        """Get all genres"""
-        return GenresService(db.session).get_all_genres()
+        # Get arguments
+        page = request.args.get('page', type=int)
 
-
-@genres_ns.route("/<int:genre_id>")
-class GenreView(Resource):
-    @genres_ns.response(200, "OK")
-    @genres_ns.response(404, "Genre not found")
-    def get(self, genre_id: int):
-        """Get genre by id"""
+        # Get results
         try:
-            return GenresService(db.session).get_item_by_id(genre_id)
+            genres_found = genre_service.get_all(page)
+            return genres_schema.dump(genres_found), 200
         except ItemNotFound:
-            abort(404, message="Genre not found")
+            abort(404, message=f'Page {page} not found')
+
+
+@genre_ns.route('/<int:uid>/')
+class GenreView(Resource):
+    @genre_ns.doc(description='Get genre by id')
+    @genre_ns.response(200, 'Success')
+    @genre_ns.response(404, 'Not found')
+    def get(self, uid):
+        try:
+            genre = genre_service.get_one(uid)
+            return genre_schema.dump(genre), 200
+        except ItemNotFound:
+            abort(404, f'Genre with id={uid} not found')

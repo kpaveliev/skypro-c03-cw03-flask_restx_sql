@@ -12,7 +12,7 @@ class Genre(BaseMixin, db.Model):
     def __repr__(self):
         return f"<Genre '{self.name.title()}'>"
 
+
 class GenreSchema(Schema):
     id = fields.Int()
     name = fields.Str()
-

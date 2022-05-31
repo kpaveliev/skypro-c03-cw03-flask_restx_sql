@@ -1,11 +1,13 @@
-from .genres_service import GenresService
 from .movie import MovieService
+from .genre import GenreService
+from .director import DirectorService
 from .user import UserService
 from .auth import AuthService
 
 __all__ = [
-    "GenresService",
     "MovieService",
+    "DirectorService",
+    "GenreService",
     "UserService",
     "AuthService"
 ]

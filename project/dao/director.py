@@ -1,5 +1,5 @@
 from .base import BaseDAO
 
 
-class GenreDAO(BaseDAO):
+class DirectorDAO(BaseDAO):
     pass

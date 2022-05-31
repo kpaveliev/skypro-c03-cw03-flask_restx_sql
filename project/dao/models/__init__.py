@@ -5,7 +5,7 @@ from .user import User, UserSchema
 
 __all__ = [
     "Genre",
-    "GenreSchema"
+    "GenreSchema",
     "Director",
     "DirectorSchema",
     "Movie",

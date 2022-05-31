@@ -1,6 +1,5 @@
 from flask import request
 from flask_restx import Resource, Namespace, abort
-from marshmallow import ValidationError
 
 from project.exceptions import ItemNotFound
 from project.container import movie_service
@@ -20,29 +19,28 @@ class MoviesViews(Resource):
     @movie_ns.response(200, 'Success')
     @movie_ns.response(404, 'Not found')
     def get(self):
-
+        # Get arguments
         page = request.args.get('page', type=int)
         status = request.args.get('status')
 
-        movies_found = movie_service.get_all(page, status)
+        # Get results
+        try:
+            movies_found = movie_service.get_all(page, status)
+            return movies_schema.dump(movies_found), 200
+        except ItemNotFound:
+            abort(404, message=f'Page {page} not found')
 
-        if not movies_found:
-            abort(404, message='Movies not found')
 
-        return movies_schema.dump(movies_found), 200
-
-
-@movie_ns.route('/<int:uid>')
+@movie_ns.route('/<int:uid>/')
 class MovieView(Resource):
     @movie_ns.doc(description='Get movie by id')
     @movie_ns.response(200, 'Success')
     @movie_ns.response(404, 'Not found')
     def get(self, uid):
-        # Find row
-        movie = movie_service.get_one(uid)
-
-        # Throw not found if uid not found
-        if not movie:
+        try:
+            movie = movie_service.get_one(uid)
+            return movie_schema.dump(movie), 200
+        except ItemNotFound:
             abort(404, f'Movie with id={uid} not found')
 
-        return movie_schema.dump(movie), 200
+
