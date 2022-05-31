@@ -28,7 +28,7 @@ class UserDAO(BaseDAO):
         self.session.commit()
         return user
 
-    def update(self, data: dict) -> None:
+    def update_by_email(self, data: dict, email: str) -> None:
         """Update user with data"""
-        self.session.query(User).filter(User.id == data['id']).update(data)
+        self.session.query(User).filter(User.email == email).update(data)
         self.session.commit()

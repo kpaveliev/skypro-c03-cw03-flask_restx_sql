@@ -29,38 +29,60 @@ class UserView(Resource):
     @user_ns.response(404, 'Not Found')
     def get(self):
         try:
-            uid = request.json.get('id')
-            user = user_service.get_one(uid)
+            # Get token
+            auth_data = request.headers['Authorization']
+            token = auth_data.split("Bearer ")[-1]
+            email = auth_service.get_email_from_token(token)
+
+            # Get and update data
+            user = user_service.get_by_email(email)
             user_dict = user_schema.dump(user)
             return user_dict, 200
         except ItemNotFound:
             abort(404, 'User not found')
 
+    @auth_service.auth_required
     @user_ns.doc(description='Get user by id')
     @user_ns.response(200, 'User updated', user_model)
     @user_ns.response(405, 'Method not allowed')
     @user_ns.response(404, 'Not Found')
+    @user_ns.response(404, 'Wrong fields passed')
     def patch(self):
         try:
-            # Update with data passed if found
+            # Get token
+            auth_data = request.headers['Authorization']
+            token = auth_data.split("Bearer ")[-1]
+            email = auth_service.get_email_from_token(token)
+
+            # Get and update data
             updated_data = user_schema.dump(request.json)
-            user_service.update_info(updated_data)
+            user_service.update_info(updated_data, email)
             return "", 200
         except MethodNotAllowed:
             abort(405, "You're not allowed to change the data passed")
         except ItemNotFound:
             abort(404, 'User not found')
+        except ValidationError:
+            abort(400, 'Wrong fields passed')
 
-@user_ns.route('/password')
+
+@user_ns.route('/password/')
 class PasswordView(Resource):
+    @auth_service.auth_required
     @user_ns.doc(description='Update user password')
     @user_ns.response(200, 'Password updated', user_model)
     @user_ns.response(404, 'Not Found')
     @user_ns.response(405, 'Method not allowed')
     def put(self):
         try:
+            # Get token
+            auth_data = request.headers['Authorization']
+            token = auth_data.split("Bearer ")[-1]
+            email = auth_service.get_email_from_token(token)
+
+            # Get and update data
             passwords = request.json
-            user_service.update_password(passwords)
+            user_service.update_password(passwords, email)
             return "", 200
         except ItemNotFound:
             abort(404, 'User not found')
@@ -68,41 +90,3 @@ class PasswordView(Resource):
             abort(401, 'Password is incorrect')
         except MethodNotAllowed:
             abort(405, 'Invalid data passed')
-
-
-# @user_ns.route('/')
-# class UsersView(Resource):
-#     @user_ns.doc(description='Get users')
-#     @user_ns.response(200, 'Success', user_model)
-#     def get(self):
-#         all_users = user_service.get_all()
-#         result = UserSchema(many=True).dump(all_users)
-#         return result, 200
-
-    # @user_ns.doc(description='Add new user', body=user_model)
-    # @user_ns.response(201, 'Created')
-    # @user_ns.response(400, 'ValidationError')
-    # def post(self):
-    #     data = request.json
-    #     try:
-    #         user_dict = UserSchema().dump(data)
-    #     except ValidationError as e:
-    #         return f"{e}", 400
-    #     else:
-    #         user = user_service.create(user_dict)
-    #         return "", 201, {"location": f"/users/{user.id}"}
-
-
-#
-#     @user_ns.doc(description='Delete user by id')
-#     @user_ns.response(204, 'User deleted', user_model)
-#     @user_ns.response(404, 'Not Found')
-#     def delete(self, uid):
-#         # Check if user exist
-#         user = user_service.get_one(uid)
-#         if not user:
-#             return "", 404
-#
-#         # Delete if found
-#         user_service.delete(uid)
-#         return "", 204

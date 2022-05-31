@@ -42,5 +42,3 @@ class MovieView(Resource):
             return movie_schema.dump(movie), 200
         except ItemNotFound:
             abort(404, f'Movie with id={uid} not found')
-
-

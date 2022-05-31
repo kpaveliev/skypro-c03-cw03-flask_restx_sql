@@ -4,8 +4,6 @@ from flask import current_app
 from sqlalchemy import desc
 from sqlalchemy.orm.scoping import scoped_session
 
-from project.exceptions import ItemNotFound
-
 
 class BaseDAO:
 

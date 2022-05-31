@@ -20,6 +20,7 @@ tokens_model = auth_ns.model('Tokens', {
     'refresh_token': fields.String(required=True)
 })
 
+
 @auth_ns.route('/register/')
 class AuthView(Resource):
     @auth_ns.doc(description='User registration', body=auth_model)

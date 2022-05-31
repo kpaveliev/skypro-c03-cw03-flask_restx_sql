@@ -1,10 +1,8 @@
 import base64
 import hashlib
 import hmac
-from typing import List
 
 from flask import current_app
-from flask_restx import abort
 from werkzeug.exceptions import MethodNotAllowed
 
 from project.dao.models import User
@@ -37,20 +35,21 @@ class UserService(BaseService):
         user = self.dao.create(data)
         return user
 
-    def update_info(self, data: dict) -> None:
+    def update_info(self, data: dict, email: str) -> None:
         """
         Partially update user information
 
         :raises MethodNotAllowed: If changing email or password
         """
+        # Check user exists
+        self.get_by_email(email)
         # Check data is okay
         if 'password' not in data.keys() and 'email' not in data.keys():
-            self.get_one(data.get('id'))
-            self.dao.update(data)
+            self.dao.update_by_email(data, email)
         else:
             raise MethodNotAllowed
 
-    def update_password(self, data: dict) -> None:
+    def update_password(self, data: dict, email: str) -> None:
         """
         Partially update user information
 
@@ -59,12 +58,11 @@ class UserService(BaseService):
         """
 
         # Check data is okay
-        uid = data.get('id')
-        user = self.get_one(uid)
-        current_password = data.get('password_1')
-        new_password = data.get('password_2')
+        user = self.get_by_email(email)
+        current_password = data.get('old_password')
+        new_password = data.get('new_password')
 
-        if None in [uid, current_password, new_password]:
+        if None in [current_password, new_password]:
             raise MethodNotAllowed
 
         if not self.compare_passwords(user.password, current_password):
@@ -72,10 +70,9 @@ class UserService(BaseService):
 
         # Hash password and update
         data = {
-            'id': uid,
             'password': self.hash_password(new_password)
         }
-        self.dao.update(data)
+        self.dao.update_by_email(data, email)
 
     def hash_password(self, password: str) -> bytes:
         """Create sha256 password hash encoded with base64"""
