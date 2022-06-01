@@ -37,7 +37,7 @@ class AuthView(Resource):
 
         # Register user
         try:
-            data = user_schema.dump(credentials)
+            data = user_schema.load(credentials)
             user = user_service.create(data)
             return "", 201, {"location": f"/user/{user.id}"}
         except ValidationError:
