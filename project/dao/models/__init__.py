@@ -2,6 +2,7 @@ from .genre import Genre, GenreSchema
 from .director import Director, DirectorSchema
 from .movie import Movie, MovieSchema
 from .user import User, UserSchema
+from .favourite import Favourite, FavouriteSchema
 
 __all__ = [
     "Genre",
@@ -11,5 +12,7 @@ __all__ = [
     "Movie",
     "MovieSchema",
     "User",
-    "UserSchema"
+    "UserSchema",
+    "Favourite",
+    "FavouriteSchema"
 ]

@@ -4,7 +4,7 @@ from flask_restx import Api
 
 from project.setup_db import db
 from project.views import (movie_ns, director_ns, genre_ns,
-                           auth_ns, user_ns)
+                           auth_ns, user_ns, favourite_ns)
 
 api = Api(
     authorizations={
@@ -36,5 +36,6 @@ def create_app(config_obj):
     api.add_namespace(genre_ns)
     api.add_namespace(auth_ns)
     api.add_namespace(user_ns)
+    api.add_namespace(favourite_ns)
 
     return app

@@ -6,6 +6,10 @@ class UserAlreadyExists(Exception):
     pass
 
 
+class ItemAlreadyExists(Exception):
+    pass
+
+
 class IncorrectPassword(Exception):
     pass
 

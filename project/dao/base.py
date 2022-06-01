@@ -30,3 +30,15 @@ class BaseDAO:
                 .offset(page * current_app.config.get('ITEMS_PER_PAGE') - current_app.config.get('ITEMS_PER_PAGE'))
 
         return items.all()
+
+    def create(self, data: dict) -> object:
+        """Add item to the database"""
+        item = self.model(**data)
+        self.session.add(item)
+        self.session.commit()
+        return item
+
+    def delete(self, uid):
+        item = self.get_one(uid)
+        self.session.delete(item)
+        self.session.commit()

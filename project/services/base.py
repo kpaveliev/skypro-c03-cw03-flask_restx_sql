@@ -1,11 +1,11 @@
 from typing import Union, List
 
-from project.dao import MovieDAO, GenreDAO, UserDAO, DirectorDAO
+from project.dao import MovieDAO, GenreDAO, UserDAO, DirectorDAO, FavouriteDAO
 from project.exceptions import ItemNotFound
 
 
 class BaseService:
-    def __init__(self, dao: Union[MovieDAO, GenreDAO, DirectorDAO, UserDAO]) -> None:
+    def __init__(self, dao: Union[MovieDAO, GenreDAO, DirectorDAO, UserDAO, FavouriteDAO]) -> None:
         """DAO needs to be submitted when creating service object"""
         self.dao = dao
 
@@ -27,3 +27,8 @@ class BaseService:
         if not items:
             raise ItemNotFound
         return items
+
+    def create(self, data: dict) -> object:
+        """Add item to the database"""
+        item = self.dao.create(data)
+        return item

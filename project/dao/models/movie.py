@@ -19,7 +19,7 @@ class Movie(BaseMixin, db.Model):
     director = db.relationship("Director")
 
     def __repr__(self):
-        return f"<Genre '{self.title.title()}'>"
+        return f"<Movie '{self.title.title()}'>"
 
 
 class MovieSchema(Schema):

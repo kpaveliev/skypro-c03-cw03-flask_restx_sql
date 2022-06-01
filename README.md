@@ -14,10 +14,11 @@
 9. /directors/ - GET (params: page)
 10. /directors/<uid> - GET
 
-**Second part - not done**
-1. /favorites/movies/ - POST, DELETE
-2. tests
-3. documentation
+**Second part - partly done**
+1. /favorites/movies/<movie_id>/ - POST, DELETE, 
+2. /favorites/movies/ - GET 
+3. tests - not done
+4. documentation - not done
 
 Kirill Paveliev\
 May 2022
