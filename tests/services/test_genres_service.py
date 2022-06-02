@@ -4,14 +4,14 @@ import pytest
 
 from project.dao.models import Genre
 from project.exceptions import ItemNotFound
-from project.schemas.genre import GenreSchema
-from project.services import GenresService
+from project.dao.models import GenreSchema
+from project.services import GenreService
 
 
 class TestGenresService:
     @pytest.fixture(autouse=True)
     def service(self, db):
-        self.service = GenresService(db.session)
+        self.service = GenreService(db.session)
 
     @pytest.fixture
     def genre(self):
