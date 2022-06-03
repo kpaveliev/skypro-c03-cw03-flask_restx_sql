@@ -1,7 +1,7 @@
 from typing import List
 
 from .base import BaseDAO
-from .models import Favourite
+from .models import Favourite, Movie
 
 
 class FavouriteDAO(BaseDAO):
@@ -15,7 +15,7 @@ class FavouriteDAO(BaseDAO):
 
     def get_user_favourites(self, user_id) -> List[Favourite]:
         """Get all favourites of the user"""
-        data = self.session.query(Favourite)\
-            .filter(Favourite.user_id == user_id)\
+        data = self.session.query(Movie).join(Favourite)\
+            .filter(Favourite.user_id == user_id, Movie.id == Favourite.movie_id)\
             .all()
         return data

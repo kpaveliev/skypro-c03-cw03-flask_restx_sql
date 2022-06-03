@@ -3,12 +3,13 @@ from flask_restx import Resource, Namespace, abort
 
 from project.exceptions import ItemNotFound, ItemAlreadyExists, InvalidToken
 from project.container import favourite_service, auth_service, user_service, movie_service
-from project.dao.models import FavouriteSchema
+from project.dao.models import FavouriteSchema, MovieSchema
 
 # Declare namespace and define marshmallow schema
 favourite_ns = Namespace('favorites', description='Views for favourites')
 favourites_schema = FavouriteSchema(many=True)
 favourite_schema = FavouriteSchema()
+movies_schema = MovieSchema(many=True)
 
 
 @favourite_ns.route('/movies/')
@@ -28,7 +29,7 @@ class FavouritesViews(Resource):
 
         # Get results
         favourites = favourite_service.get_user_favourites(user_id)
-        return favourites_schema.dump(favourites)
+        return movies_schema.dump(favourites)
         # except ItemNotFound:
         #     abort(404, message=f'No favourites found')
 

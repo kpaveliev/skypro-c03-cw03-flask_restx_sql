@@ -1,5 +1,6 @@
 from marshmallow import Schema, fields
 
+from project.dao.models import MovieSchema
 from project.dao.models.base import BaseMixin
 from project.setup_db import db
 
@@ -16,4 +17,4 @@ class Favourite(BaseMixin, db.Model):
 
 class FavouriteSchema(Schema):
     user_id = fields.Int()
-    movie_id = fields.Int()
+    movie = fields.Nested(MovieSchema)

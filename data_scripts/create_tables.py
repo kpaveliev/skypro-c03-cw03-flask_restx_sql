@@ -1,3 +1,7 @@
+import os, sys
+path = os.path.abspath('.')
+sys.path.insert(1, path)
+
 from project.config import DevelopmentConfig
 from project.dao.models import genre, director, movie, user, favourite
 from project.server import create_app
