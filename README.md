@@ -1,6 +1,11 @@
 # SkyPro.Python course
 ## Coursework 04. Flask-Restx, SQLAlchemy
 
+**Attention**
+
+1. Set up works correctly with front added through index.html (port :25000)
+2. If you want to work with node.js change port to (:5000)
+
 **Main part**
 
 1. /auth/register - POST

@@ -1,3 +1,7 @@
+import os, sys
+path = os.path.abspath('.')
+sys.path.insert(1, path)
+
 from sqlalchemy.exc import IntegrityError
 
 from project.config import DevelopmentConfig
