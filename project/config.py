@@ -20,15 +20,23 @@ class BaseConfig:
     PWD_HASH_SALT = base64.b64decode("salt")
     PWD_HASH_ITERATIONS = 100_000
 
+    RESTX_JSON = {'ensure_ascii': False, 'indent': 2}
+
 
 class TestingConfig(BaseConfig):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
 
 
+class DockerConfig(BaseConfig):
+    SQLALCHEMY_DATABASE_URI = "postgresql://user:password@pg/movies"
+    SQLALCHEMY_BINDS = {
+        'users': "postgresql:///user:password@pg/users"
+    }
+
+
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_ECHO = False
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
         os.path.dirname(BASEDIR), "project/data/movies.db"
     )

@@ -2,7 +2,8 @@ from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restx import Api
 
-from project.setup_db import db
+
+from project.setup_db import db, migrate
 from project.views import (movie_ns, director_ns, genre_ns,
                            auth_ns, user_ns, favourite_ns)
 
@@ -13,6 +14,7 @@ api = Api(
     title="Flask Course Project 4",
     doc="/docs",
 )
+
 
 # Нужно для работы с фронтендом
 cors = CORS()
@@ -28,6 +30,7 @@ def create_app(config_obj):
 
     cors.init_app(app)
     db.init_app(app)
+    migrate.init_app(app, db)
     api.init_app(app)
 
     # Register end-points
