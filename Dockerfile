@@ -11,9 +11,9 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy project
-COPY run.py .
-COPY project .
-COPY data_scripts .
+COPY run.py run.py
+COPY project project
+COPY data_scripts data_scripts
 COPY migrations migrations
 COPY docker_config.py default_config.py
 
