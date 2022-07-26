@@ -18,6 +18,7 @@ class MoviesViews(Resource):
                           'status': 'new - to show recent films first'})
     @movie_ns.response(200, 'Success')
     @movie_ns.response(404, 'Not found')
+    @movie_ns.expect(movies_schema)
     def get(self):
         # Get arguments
         page = request.args.get('page', type=int)
@@ -36,6 +37,7 @@ class MovieView(Resource):
     @movie_ns.doc(description='Get movie by id')
     @movie_ns.response(200, 'Success')
     @movie_ns.response(404, 'Not found')
+    @movie_ns.expect(MovieSchema)
     def get(self, uid):
         try:
             movie = movie_service.get_one(uid)
