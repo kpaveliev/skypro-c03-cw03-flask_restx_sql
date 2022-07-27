@@ -16,7 +16,7 @@ from project.utils import read_json
 
 app = create_app(DevelopmentConfig)
 
-data = read_json("fixtures.json")
+data = read_json("data_scripts/fixtures.json")
 
 with app.app_context():
     for genre in data["genres"]:

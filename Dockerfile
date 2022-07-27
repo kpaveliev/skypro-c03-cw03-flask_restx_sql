@@ -15,4 +15,5 @@ COPY . .
 COPY project/docker_config.py project/config.py
 
 # run flask
-CMD flask run -h 0.0.0.0 -p 80
+#CMD flask run -h 0.0.0.0 -p 80
+CMD ["sh", "entrypoint.sh"]

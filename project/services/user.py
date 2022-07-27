@@ -96,5 +96,5 @@ class UserService(BaseService):
         decoded_digest: bytes = base64.b64decode(password_hash)
         passed_hash: bytes = self.create_hash(password_passed)
         # Compare
-        is_equal = hmac.compare_digest(decoded_digest, passed_hash)
+        is_equal: bool = hmac.compare_digest(decoded_digest, passed_hash)
         return is_equal
