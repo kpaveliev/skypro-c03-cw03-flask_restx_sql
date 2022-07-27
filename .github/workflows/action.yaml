@@ -35,4 +35,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           source: "deploy/docker-compose.yaml,deploy/docker_config.py"
           target: "kinopoisk_ci"
-      strip_components: 1
+          strip_components: 1
