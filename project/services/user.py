@@ -93,6 +93,7 @@ class UserService(BaseService):
     def compare_passwords(self, password_hash: str, password_passed: str) -> bool:
         """Compare password passed with the user password in db"""
         # Make passwords comparable
+        print(password_hash)
         decoded_digest: bytes = base64.b64decode(password_hash)
         passed_hash: bytes = self.create_hash(password_passed)
         # Compare

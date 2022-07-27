@@ -5,6 +5,7 @@ WORKDIR /code
 
 # set environment variables
 ENV FLASK_APP=run.py
+ENV FLASK_DEBUG=1
 
 # install dependencies
 COPY requirements.txt .
