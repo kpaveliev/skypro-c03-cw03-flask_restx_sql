@@ -9,7 +9,7 @@ services:
     environment:
       FLASK_APP: run.py
     volumes:
-      - ./docker_config.py:/code/default_config.py
+      - ./project/docker_config.py:/code/project/config.py
     depends_on:
       pg:
         condition: service_healthy
@@ -21,7 +21,7 @@ services:
     environment:
       FLASK_APP: run.py
     volumes:
-      - ./docker_config.py:/code/default_config.py
+      - ./project/docker_config.py:/code/project/config.py
     depends_on:
       pg:
         condition: service_healthy

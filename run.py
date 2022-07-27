@@ -1,7 +1,7 @@
-from project.config import DevelopmentConfig, DockerConfig
+from project.config import DevelopmentConfig
 from project.server import create_app
 
-app = create_app(DockerConfig)
+app = create_app(DevelopmentConfig)
 app.config.from_envvar("APP_SETTINGS", silent=True)
 
 if __name__ == '__main__':

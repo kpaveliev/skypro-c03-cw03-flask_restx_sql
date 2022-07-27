@@ -11,11 +11,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy project
-COPY run.py run.py
-COPY project project
-COPY data_scripts data_scripts
-COPY migrations migrations
-COPY docker_config.py default_config.py
+COPY . .
+COPY project/docker_config.py project/config.py
 
 # run flask
 CMD flask run -h 0.0.0.0 -p 80

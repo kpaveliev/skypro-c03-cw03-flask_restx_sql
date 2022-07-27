@@ -5,7 +5,6 @@ from project.setup_db import db
 
 
 class User(BaseMixin, db.Model):
-    __bind_key__ = 'users'
     __tablename__ = 'user'
 
     email = db.Column(db.String, unique=True, nullable=False)

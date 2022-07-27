@@ -28,21 +28,8 @@ class TestingConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
 
 
-class DockerConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = "postgresql://user:password@pg/movies"
-    SQLALCHEMY_BINDS = {
-        'users': "postgresql:///user:password@pg/users"
-    }
-
-
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(
         os.path.dirname(BASEDIR), "project/data/movies.db"
     )
-    SQLALCHEMY_BINDS = {
-        'users': "sqlite:///" + os.path.join(
-        os.path.dirname(BASEDIR), "project/data/users.db")
-    }
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    RESTX_JSON = {'ensure_ascii': False, 'indent': 2}

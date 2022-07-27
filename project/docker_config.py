@@ -20,8 +20,5 @@ class BaseConfig:
     RESTX_JSON = {'ensure_ascii': False, 'indent': 2}
 
 
-class DockerConfig(BaseConfig):
+class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = "postgresql://user:password@pg/movies"
-    SQLALCHEMY_BINDS = {
-        'users': "postgresql:///user:password@pg/users"
-    }
