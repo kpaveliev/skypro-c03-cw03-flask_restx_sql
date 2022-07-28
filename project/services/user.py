@@ -31,7 +31,7 @@ class UserService(BaseService):
             raise UserAlreadyExists
 
         # Hash password and add user to the database
-        data['password'] = self.hash_password(data.get('password'))
+        data['password'] = self.create_hash(data.get('password'))
         user = self.dao.create(data)
         return user
 
@@ -70,15 +70,9 @@ class UserService(BaseService):
 
         # Hash password and update
         data = {
-            'password': self.hash_password(new_password)
+            'password': self.create_hash(new_password)
         }
         self.dao.update_by_email(data, email)
-
-    def hash_password(self, password: str) -> bytes:
-        """Create sha256 password hash encoded with base64"""
-        hash_digest = self.create_hash(password)
-        encoded_digest = base64.b64encode(hash_digest)
-        return encoded_digest
 
     def create_hash(self, password: str) -> bytes:
         """Create sha256 password hash"""
@@ -92,10 +86,6 @@ class UserService(BaseService):
 
     def compare_passwords(self, password_hash: str, password_passed: str) -> bool:
         """Compare password passed with the user password in db"""
-        # Make passwords comparable
-        print(password_hash)
-        decoded_digest: bytes = base64.b64decode(password_hash)
         passed_hash: bytes = self.create_hash(password_passed)
-        # Compare
-        is_equal: bool = hmac.compare_digest(decoded_digest, passed_hash)
+        is_equal: bool = hmac.compare_digest(password_hash, passed_hash)
         return is_equal

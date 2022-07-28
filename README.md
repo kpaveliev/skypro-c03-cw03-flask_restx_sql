@@ -1,5 +1,5 @@
 # SkyPro.Python course
-## Coursework 04. Flask-Restx, SQLAlchemy
+## HW26. Kinopoisk with docker-compose, github actions
 
 **Main part**
 
@@ -16,9 +16,7 @@
 
 **Second part - partly done**
 1. /favorites/movies/<movie_id>/ - POST, DELETE, 
-2. /favorites/movies/ - GET 
-3. tests - not done
-4. documentation - not done
+2. /favorites/movies/ - GET
 
 Kirill Paveliev\
 May 2022
