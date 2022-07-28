@@ -4,7 +4,7 @@ services:
   api:
     image: kpaveliev/skypro-cw04-kinopoisk:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     ports:
-      - 80:80
+      - 25000:25000
     volumes:
       - ./docker_config.py:/code/project/config.py
     depends_on:
