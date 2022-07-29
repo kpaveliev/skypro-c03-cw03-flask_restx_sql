@@ -5,9 +5,6 @@ services:
     image: kpaveliev/skypro-kinopoisk_front:latest
     ports:
       - "80:3000"
-    depends_on:
-      api:
-        condition: service_started
   api:
     image: kpaveliev/skypro-cw04-kinopoisk_v2:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     ports:
