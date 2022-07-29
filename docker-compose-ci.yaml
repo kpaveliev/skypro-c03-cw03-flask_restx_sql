@@ -17,6 +17,7 @@ services:
         condition: service_healthy
   pg:
     image: postgres:latest
+    network_mode: host
     environment:
       POSTGRES_USER: $DB_USER
       POSTGRES_PASSWORD: $DB_PASSWORD
