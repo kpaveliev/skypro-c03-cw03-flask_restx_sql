@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_cors import CORS
 from flask_restx import Api
 
@@ -22,8 +22,8 @@ def create_app(config_obj):
     app = Flask(__name__)
     app.config.from_object(config_obj)
 
-    # Register extenstions
-    cors.init_app(app)
+    # Register extensions
+    cors.init_app(app, resources={r"/*": {"origins": "http://kpaveliev-skypro.cf:port"}})
     db.init_app(app)
     migrate.init_app(app, db)
     api.init_app(app)
