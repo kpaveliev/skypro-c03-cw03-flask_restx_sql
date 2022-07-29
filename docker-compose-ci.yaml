@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   front:
-    image: kpaveliev/skypro-kinopoisk_front:latest
+    image: painassasin/node_cource_project:latest
     ports:
       - 80:80
     depends_on:
