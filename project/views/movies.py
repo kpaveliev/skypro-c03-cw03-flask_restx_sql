@@ -12,7 +12,6 @@ movie_schema = MovieSchema()
 
 
 @movie_ns.route('/')
-@
 class MoviesViews(Resource):
     @movie_ns.doc(description='Get movies',
                   params={'page': 'Page number',
