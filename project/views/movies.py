@@ -12,6 +12,7 @@ movie_schema = MovieSchema()
 
 
 @movie_ns.route('/')
+@
 class MoviesViews(Resource):
     @movie_ns.doc(description='Get movies',
                   params={'page': 'Page number',
@@ -27,7 +28,7 @@ class MoviesViews(Resource):
         # Get results
         try:
             movies_found = movie_service.get_all(page, status)
-            return movies_schema.dump(movies_found), 200
+            return movies_schema.dump(movies_found), 200, {'Access-Control-Allow-Origin': "*"}
         except ItemNotFound:
             abort(404, message=f'Page {page} not found')
 
