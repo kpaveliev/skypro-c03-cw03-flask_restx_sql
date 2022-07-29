@@ -23,10 +23,10 @@ def create_app(config_obj):
     app.config.from_object(config_obj)
 
     # Register extensions
-    cors.init_app(app, origins=["http://kpaveliev-skypro.cf", "*". "http://localhost:80"])
     db.init_app(app)
     migrate.init_app(app, db)
     api.init_app(app)
+    cors.init_app(app, origins=["http://kpaveliev-skypro.cf", "*", "http://localhost:80"], supports_credentials=True)
 
     # Register end-points
     api.add_namespace(movie_ns)
