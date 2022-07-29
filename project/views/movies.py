@@ -1,5 +1,6 @@
 from flask import request
 from flask_restx import Resource, Namespace, abort
+from flask_cors import cross_origin
 
 from project.exceptions import ItemNotFound
 from project.container import movie_service
@@ -12,6 +13,7 @@ movie_schema = MovieSchema()
 
 
 @movie_ns.route('/')
+@cross_origin(['Content-Type'])
 class MoviesViews(Resource):
     @movie_ns.doc(description='Get movies',
                   params={'page': 'Page number',
