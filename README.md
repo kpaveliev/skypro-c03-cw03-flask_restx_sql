@@ -1,6 +1,8 @@
 # SkyPro.Python course
 ## HW26. Kinopoisk with docker-compose, github actions
 
+Updated with front from docker image
+
 **Main part**
 
 1. /auth/register - POST

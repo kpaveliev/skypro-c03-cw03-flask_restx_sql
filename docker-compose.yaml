@@ -1,12 +1,18 @@
 version: "3.9"
 
 services:
+  front:
+    image: painassasin/node_cource_project:latest
+    ports:
+      - 80:80
+    depends_on:
+      api:
+        condition: service_started
   api:
     build:
       context: .
-    image: kpaveliev/skypro-cw04-kinopoisk
     ports:
-      - 25000:25000
+      - 5000:5000
     volumes:
       - ./project/docker_config.py:/code/project/config.py
     depends_on:
