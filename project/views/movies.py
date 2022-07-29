@@ -13,7 +13,7 @@ movie_schema = MovieSchema()
 
 
 @movie_ns.route('/')
-@cross_origin(['Content-Type'])
+@cross_origin(headers=['Content-Type'])
 class MoviesViews(Resource):
     @movie_ns.doc(description='Get movies',
                   params={'page': 'Page number',
