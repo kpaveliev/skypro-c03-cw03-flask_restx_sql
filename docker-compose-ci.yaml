@@ -4,7 +4,7 @@ services:
   front:
     image: kpaveliev/skypro-kinopoisk_front:latest
     ports:
-      - "80:80"
+      - "80:3000"
     depends_on:
       api:
         condition: service_started
