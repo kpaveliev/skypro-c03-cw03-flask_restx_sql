@@ -2,9 +2,9 @@ version: "3.9"
 
 services:
   front:
-    image: painassasin/node_cource_project:latest
+    image: kpaveliev/skypro-kinopoisk_front:latest
     ports:
-      - "80:80"
+      - "80:3000"
     depends_on:
       api:
         condition: service_started
