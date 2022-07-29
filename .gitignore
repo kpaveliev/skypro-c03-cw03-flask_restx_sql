@@ -8,3 +8,6 @@ __pycache__
 .coverage
 /tests
 /pg_data
+docker-compose.yaml
+project/docker_config.py
+project/config.py
