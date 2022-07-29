@@ -44,4 +44,5 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             cd kinopoisk_ci_v2
+            echo ${{ secrets.PASSWORD }} | sudo -S docker-compose pull
             echo ${{ secrets.PASSWORD }} | sudo -S docker-compose up -d
