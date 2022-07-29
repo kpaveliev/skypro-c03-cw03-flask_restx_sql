@@ -3,14 +3,15 @@ version: "3.9"
 services:
   front:
     image: painassasin/node_cource_project:latest
-    network_mode: host
+    ports:
+      - "80:80"
     depends_on:
       api:
         condition: service_started
   api:
     image: kpaveliev/skypro-cw04-kinopoisk_v2:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     ports:
-      - '5000:5000'
+      - "5000:5000"
     volumes:
       - ./docker_config.py:/code/project/config.py
     depends_on:
