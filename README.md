@@ -3,13 +3,13 @@
 
 ## Addresses
 
-http://kpaveliev-skypro.cf - project page (front)
-http://kpaveliev-skypro.cf:5000/docs - API documentation
+http://kpaveliev-skypro.cf - project page (front)\
+http://kpaveliev-skypro.cf:5000/docs - API documentation\
 
 ## ## CI/CD details
 
-App deploy on git push to server kpaveliev-skypro.cf (home/deploy/kinopoisk_ci_v2)
-kpaveliev/skypro-kinopoisk_front - front image
+App deploy on git push to server kpaveliev-skypro.cf (home/deploy/kinopoisk_ci_v2)\
+kpaveliev/skypro-kinopoisk_front - front image\
 
 Kirill Paveliev\
 July 2022
